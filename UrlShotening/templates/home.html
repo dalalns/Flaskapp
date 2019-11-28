@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <form method="POST" action="/">
+     <label>Long url</label>
+      <input type="text" name="longurl"><br/><br/>
+     <p>
+ {% if dictlen %}
+{% for key, value in var_context1.items()%}
+ This Record <a href="#"> {{key}}</a> already exists in the DB : and its short key is <a href="#">{{value}}</a>
+  {% endfor %}
+ {% endif %}
+
+
+</p>
+      <input type="submit" value="CreateShortUrl">
+    </form>
+
+</body>
+</html>
