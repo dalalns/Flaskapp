@@ -55,7 +55,11 @@ def home():
             db.session.commit()
             all_records = Longshorturl.query.order_by(Longshorturl.longurl).all()
             print(all_records)
-            return render_template('home.html', all_records=all_records)
+            dict1={}
+            for i in all_records:
+                print(i)
+                dict1[i.longurl] = i.shorturl
+            return render_template('home.html', all_records=dict1)
         except sqlalchemy.exc.IntegrityError:
             db.session.rollback()
             a = request.form.get("longurl")
