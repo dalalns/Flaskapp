@@ -46,20 +46,22 @@ db.session.commit()
 
 @app.route('/', methods=["GET", "POST"])
 def home():
-    bool_longurl = True
     if request.form:
         try:
             shorturl = 'http://bitly_'+str(randint(1000, 9999))
             longurl = request.form.get("longurl")
-            db.session.add(Longshorturl(longurl=longurl, shorturl=shorturl))
-            db.session.commit()
-            all_records = Longshorturl.query.order_by(Longshorturl.longurl).all()
-            print(all_records)
-            dict1={}
-            for i in all_records:
-                print(i)
-                dict1[i.longurl] = i.shorturl
-            return render_template('home.html', all_records=dict1)
+            if longurl is None or longurl.strip()=='':
+                return render_template("home.html", bool_empty=True)
+            else:
+                db.session.add(Longshorturl(longurl=longurl, shorturl=shorturl))
+                db.session.commit()
+                all_records = Longshorturl.query.order_by(Longshorturl.longurl).all()
+                print(all_records)
+                dict1={}
+                for i in all_records:
+                    print(i)
+                    dict1[i.longurl] = i.shorturl
+                return render_template('home.html', all_records=dict1)
         except sqlalchemy.exc.IntegrityError:
             db.session.rollback()
             a = request.form.get("longurl")
