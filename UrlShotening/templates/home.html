@@ -9,12 +9,18 @@
      <label>Long url</label>
       <input type="text" name="longurl"><br/><br/>
      <p>
- {% if dictlen %}
-{% for key, value in var_context1.items()%}
- This Record <a href="#"> {{key}}</a> already exists in the DB : and its short key is <a href="#">{{value}}</a>
-  {% endfor %}
+ {% if bool_empty %}
+ Please enter a URL!!!!
  {% endif %}
 
+ {% if var_shorturl %}
+ This Record <a href={{var_longurl}}> {{var_longurl}}</a> already exists in the DB : and its short key is <a href="{{var_longurl}}">{{var_shorturl}}</a>
+ {% endif %}
+{% if all_records %}
+ {% for key, value in all_records.items() %}
+         The short url for <a href="{{key}}">{{key}}</a> is  <a href="{{key}}">{{value}}</a> <br/> <br/>
+ {% endfor %}
+ {% endif %}
 
 </p>
       <input type="submit" value="CreateShortUrl">
